@@ -1,7 +1,7 @@
 const mongo = require("mongodb").MongoClient;
 const url = "mongodb://******:49159";
 const dbName = "anyproxy";
-const collectionName = "xj";
+
 
 module.exports = {
     summary: 'a rule to hack response',
