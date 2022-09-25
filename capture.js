@@ -67,7 +67,7 @@ const logger = {
 
 function* mian(msg) {
     const client = yield mongo.connect(url)
-    const s = client.db("anyproxy").collection("xj");
+    const s = client.db("anyproxy").collection("xx");
     yield s.insertOne(msg)
 }
 
