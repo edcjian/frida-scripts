@@ -1,9 +1,9 @@
-
 import os
 import sys
 import pdb
 import subprocess
 import pexpect
+import pdb
 
 
 def ob(a):
@@ -23,8 +23,29 @@ def frida():
     s.expect("bullhead:/ #")
     s.send("cd data/local/tmp\n")
     s.expect("bullhead:/data/local/tmp #")
-    s.send("./k0123a\n")
+    s.send("./frida15.22\n")
+
     s.interact()
+
+
+def copys(a):
+    copy(a)
+    os.popen(f'mkdir {a}')
+    os.popen(f"adb pull sdcard/{a} ./{a}")
+
+
+def copy(a):
+    b = "adb shell"
+    s = pexpect.spawn(b)
+    s.expect("bullhead:*")
+    s.sendline("su\n")
+    s.expect("bullhead:/ #")
+    s.send(f"mkdir sdcard/{a}\n")
+    s.expect("bullhead:/ #")
+    s.send(f"cd data/data/{a}\n")
+    s.expect(f"bullhead:/data/data/{a} #")
+    s.send(f"cp ./file/  sdcard/{a}\n")
+    s.close()
 
 
 def dump():
@@ -32,8 +53,6 @@ def dump():
 
 
 if __name__ == '__main__':
-    args = sys.argv
-    if len(args) == 2:
-        eval(args[1])()
-    elif len(args) == 3:
-        eval(args[1])(args[2])
+    func = sys.argv[1]
+    args = sys.argv[2:]
+    eval(func)(*args)
